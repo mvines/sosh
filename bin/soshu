@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+set -x
+exec git -C "$(readlink -f "$(dirname "$0")"/..)" pull --rebase origin master

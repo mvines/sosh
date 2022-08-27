@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+for d in /dev/nvme[01234]; do
+  if [[ -e $d ]]; then
+    echo -n "$d: "
+    sudo nvme smart-log "$d" | ag percentage_used
+  fi
+done

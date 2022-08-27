@@ -1,0 +1,40 @@
+# source this from .bashrc to setup the sosh interactive environment
+
+alias so='solana'
+alias sob='so balance'
+alias sor='so confirm -v'
+alias sol='so leader-schedule'
+alias sols='so live-slots'
+alias sok='so stakes'
+alias sog='so config get'
+alias soge='so get-epoch-info'
+alias sos='so config set'
+alias socv='so cluster-version'
+alias sobp='so block-production'
+alias sov='so validators -n'
+alias sovsc='so validators -n --sort credits'
+alias sosg='so gossip'
+alias sovg='so validator-info get'
+alias sovp='so validator-info publish'
+alias soh='so stake-history'
+alias sova='so vote-account'
+alias sosa='so stake-account'
+
+alias sv='solana-validator'
+alias svm='sv monitor'
+alias sve='sv exit'
+alias svem='sve -m'
+
+alias si='solana-install'
+alias sii='si init'
+alias sif='si info'
+alias siu='si update'
+
+alias tf='tail -f'
+alias t='tf ~/solana-validator.log'
+
+alias soshr='sudo systemctl restart sol'
+alias soshs='sudo systemctl stop sol'
+
+alias jf='journalctl -f'
+alias it='sudo iotop'
