@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+#shellcheck source=/dev/null
+#source "$(dirname "$0")"/../service-env.sh
+
+if [[ -z $1 ]]; then
+    echo "Usage: $0 <tree> [nobuild]"
+    exit 0
+fi
+
+shopt -s nullglob
+matches=(~/$1*)
+if [[ ${#matches[*]} = 0 ]]; then
+  echo "Error: Unknown solana tree: $1"
+  exit 1
+elif [[ ${#matches[*]} != 1 ]]; then
+  echo "Error: Multiple matches for '$1': ${matches[*]}"
+  exit 1
+fi
+SOLANA=${matches[0]}
+
+if [[ ! -d $SOLANA/.git ]]; then
+  echo "Error: $SOLANA/.git does not exist"
+  exit 1
+fi
+
+if [[ $2 = nobuild ]]; then
+  echo Build skipped
+else
+  (
+    set -e
+    cd $SOLANA
+    git tag --force lkg
+    export CI_COMMIT=$(git rev-parse HEAD)
+    LKG=$(git rev-parse lkg)
+    REL="rel.$CI_COMMIT"
+    set -x
+
+    git pull --rebase
+    git show --summary
+    ./scripts/cargo-install-all.sh --validator-only "$REL"
+    git log -n 256 > "$REL"/log
+    echo "$LKG" > "$REL"/lkg
+    rm -rf rel
+    ln -sf "$REL" rel
+
+    if [[ $(ls -dt rel.* | wc -l) -gt 5 ]]; then
+      ls -dt rel.* | tail -n+6 | xargs rm -rf
+    fi
+  ) || exit $?
+fi
+
+(
+  set -x
+  ln -sf -T $SOLANA ~/solana
+)
