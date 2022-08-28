@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ -z $1 ]]; then
+  echo "Usage: $0 <primary|secondary|*>"
+  exit 1
+fi
+
+if [[ ! -d ~/keys/$1 ]]; then
+  echo "Invalid config: $1"
+  exit 1
+fi
+
+ln -sfT ~/keys/$1 ~/active-key
+
+#shellcheck source=/dev/null
+source "$(dirname "$0")"/../service-env.sh
+
+msg="configured for $SOSH_CLUSTER $SOSH_CONFIG"
+echo "$msg"
+if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
+  curl -X POST -H 'Content-type: application/json' \
+    --data "{\"text\":\"$(hostname): $msg\"}" \
+    $SOSH_SLACK_WEBHOOK || true
+fi

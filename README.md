@@ -101,10 +101,54 @@ cp $SOSH/sosh-config-default.sh ~/sosh-config.sh
 ```
 and edit
 
-### Make keypairs
+### Validator keypairs
+
+#### Primary
+The primary keypair is what your staked node uses by default.
+
 ```
-solana-keygen new -o validator-identity.json --no-bip39-passphrase -s && \
-  solana-keygen new -o validator-vote-account.json --no-bip39-passphrase -s
+mkdir -p ~/keys/primary
+```
+then either copy your existing `validator-identity.json` and
+`validator-vote-account.json` into that directory or create newones with
+```
+solana-keygen new -o ~/keys/primary/validator-identity.json --no-bip39-passphrase -s && \
+  solana-keygen new -o ~/keys/primary/validator-vote-account.json --no-bip39-passphrase -s
+```
+
+If you wish to activate the primary keypair,
+```
+sosh-set-config primary
+```
+
+#### Secondary
+Secondary keypairs are host-specific and used by hot spare machines that can be switched over to
+primary at runtime. Once your primary keypair is configured, run
+
+```
+mkdir -p ~/keys/secondary && \
+  solana-keygen new -o ~/keys/secondary/validator-identity.json --no-bip39-passphrase -s
+```
+
+If you wish to activate the secondary keypair,
+```
+sosh-set-config secondary
+```
+
+#### Other keypairs...
+
+Any string other than `primary` and `secondary` may be used to configure other keypairs for dev and testing.
+For example to configure a `dev` keypair:
+
+```
+mkdir -p ~/keys/dev && \
+  solana-keygen new -o ~/keys/dev/validator-identity.json --no-bip39-passphrase -s && \
+  solana-keygen new -o ~/keys/dev/validator-vote-account.json --no-bip39-passphrase -s
+```
+
+If you wish to activate the dev keypair,
+```
+sosh-set-config dev
 ```
 
 ### Maybe Setup tmpfs

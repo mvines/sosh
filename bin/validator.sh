@@ -19,7 +19,7 @@ find ~/ledger/ -name 'snapshot-*' -size 0 -print -exec rm {} \; || true
 args=(
   --no-untrusted-rpc
   --dynamic-port-range 8000-8022
-  --identity ~/validator-identity.json
+  --identity $SOSH_VALIDATOR_IDENTITY
   --ledger ~/ledger
   --expected-genesis-hash $SOSH_EXPECTED_GENESIS_HASH
   --limit-ledger-size $SOSH_LIMIT_LEDGER_SIZE
@@ -44,7 +44,7 @@ args=(
   --maximum-incremental-snapshots-to-retain 2
   #--maximum-local-snapshot-age 5000
   --no-check-vote-account
-  --vote-account ~/validator-vote-account.json
+  --vote-account $SOSH_VALIDATOR_VOTE_ACCOUNT
 )
 
 

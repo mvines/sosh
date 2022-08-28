@@ -21,17 +21,16 @@ source "$SOSH"/sosh.bashrc
     uptime
   )
 
-  echo --[ sosh solana version ]------------------------------------
   (
+    echo --[ sosh ]------------------------------------
     #shellcheck source=/dev/null
     . "$SOSH"/service-env.sh
+    echo "$(solana --version): $SOLANA_ROOT"
+
+    echo --[ active keypairs: $SOSH_CONFIG]-----------
+    for keypair in $SOSH_VALIDATOR_IDENTITY $SOSH_VALIDATOR_VOTE_ACCOUNT $SOSH_AUTHORIZED_VOTER; do
+      echo "$(basename "$keypair"): $(solana-keygen pubkey "$keypair")"
+    done
   )
-
-  echo --[ keypairs ]--------------------------------------------------
-  shopt -s nullglob
-  for keypair in ~/*.json; do
-    echo "$(basename "$keypair"): $(solana-keygen pubkey "$keypair")"
-  done
-
 )
 true
