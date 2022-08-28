@@ -33,8 +33,8 @@ alias siu='si update'
 alias tf='tail -f'
 alias t='tf ~/solana-validator.log'
 
-alias soshr='sudo systemctl restart sol'
-alias soshs='sudo systemctl stop sol'
+alias soshr='sudo systemctl restart sol sol-hc'
+alias soshs='sudo systemctl stop sol sol-hc'
 
 alias jf='journalctl -f'
 alias it='sudo iotop'

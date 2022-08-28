@@ -74,8 +74,8 @@ else
   args+=(--no-os-disk-stats-reporting)
 fi
 
-if [[ -n $AUTHORIZED_VOTER ]]; then
-  args+=(--authorized-voter "$AUTHORIZED_VOTER")
+if [[ -n $SOSH_AUTHORIZED_VOTER ]]; then
+  args+=(--authorized-voter "$SOSH_AUTHORIZED_VOTER")
 fi
 
 if [[ -n $SOSH_HEALTH_CHECK_SLOT_DISTANCE ]]; then

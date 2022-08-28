@@ -180,6 +180,7 @@ sudo bash -c "cat >/etc/systemd/system/sol.service <<EOF
 Description=Solana Validator
 After=network.target
 StartLimitIntervalSec=0
+Wants=sol-hc.service
 
 [Service]
 Type=simple
@@ -192,12 +193,29 @@ ExecStart=$HOME/sosh/bin/validator.sh
 
 [Install]
 WantedBy=multi-user.target
+EOF" &&
+
+sudo bash -c "cat >/etc/systemd/system/sol-hc.service <<EOF
+[Unit]
+Description=Solana Validator Healthcheck
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=$USER
+ExecStart=$HOME/sosh/bin/hc-service.sh
+
+[Install]
+WantedBy=multi-user.target
 EOF" && sudo systemctl daemon-reload
 ```
 
 then run:
 ```
-soshr          # Sosh alias for `sudo systemctl restart sol`
+soshr          # Sosh alias for `sudo systemctl restart sol sol-hc`
 ```
 and monitor with:
 ```

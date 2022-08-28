@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-#shellcheck source=/dev/null
-#source "$(dirname "$0")"/../service-env.sh
-
 if [[ -z $1 ]]; then
-    echo "Usage: $0 <tree> [nobuild]"
-    exit 0
+  echo "Usage: $0 <tree> [nobuild]"
+  exit 0
 fi
 
 shopt -s nullglob
