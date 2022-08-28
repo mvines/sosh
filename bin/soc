@@ -9,7 +9,7 @@ args=()
 if [[ -n $RPC_URL ]]; then
   args+=(--url "$RPC_URL")
 fi
-args+=(catchup ~/validator-identity.json http://127.0.0.1:8899)
+args+=(catchup ~/active-key/validator-identity.json http://127.0.0.1:8899)
 
 set -x
 exec solana ${args[@]}

@@ -4,9 +4,24 @@ set -e
 #shellcheck source=/dev/null
 source "$(dirname "$0")"/../service-env.sh
 
-# TODO: Add TRANNY...
-
 set -x
+
+if [[ $SOSH_CLUSTER = mainnet && $SOSH_CONFIG = primary ]]; then
+  if [[ -z $SOS_WAIT_FOR_SUPERMAJORITY ]]; then
+    if [[ -n $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME ]]; then
+      tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME
+
+      # Reload config in case `tranny` changed it
+      #shellcheck source=/dev/null
+      source "$(dirname "$0")"/../service-env.sh
+    else
+      echo Warn: Unable to tranny on primary restart, SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME not set
+    fi
+  else
+    echo No tranny on cluster restart
+  fi
+fi
+
 
 if [[ -n $SOSH_PERFORMANCE_GOVERNOR ]]; then
   for g in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo performance | sudo tee $g; done
@@ -46,7 +61,6 @@ args=(
   --no-check-vote-account
   --vote-account $SOSH_VALIDATOR_VOTE_ACCOUNT
 )
-
 
 if [[ -n $SOSH_RPC_PUBSUB_ENABLE_VOTE_SUBSCRIPTION ]]; then
   args+=(--rpc-pubsub-enable-vote-subscription)

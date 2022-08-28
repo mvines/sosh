@@ -110,7 +110,7 @@ The primary keypair is what your staked node uses by default.
 mkdir -p ~/keys/primary
 ```
 then either copy your existing `validator-identity.json` and
-`validator-vote-account.json` into that directory or create newones with
+`validator-vote-account.json` into that directory or create new ones with
 ```
 solana-keygen new -o ~/keys/primary/validator-identity.json --no-bip39-passphrase -s && \
   solana-keygen new -o ~/keys/primary/validator-vote-account.json --no-bip39-passphrase -s
@@ -134,6 +134,9 @@ If you wish to activate the secondary keypair,
 ```
 sosh-set-config secondary
 ```
+
+Later run `tranny <secondary-host>` from your primary to transfer voting to the
+secondary.
 
 #### Other keypairs...
 

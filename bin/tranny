@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+usage() {
+   echo "Usage: $0 [-f] <host>"
+   exit 1
+}
+
+set -e
+force=
+force_force=
+if [[ $1 = -f ]]; then
+  force=1
+  shift
+fi
+
+if [[ $1 = -f ]]; then
+  force_force=1
+  shift
+fi
+
+if [[ -z $1 ]] || [[ -n $2 ]]; then
+  usage
+fi
+
+SOSH="$(dirname "$0")/.."
+REMOTE_SOSH="~/sosh"
+source "$SOSH"/service-env.sh
+
+ID_JSON=~/keys/primary/validator-identity.json
+ID="$(set -x; solana-keygen pubkey $ID_JSON)"
+echo "ID=$ID"
+set -x
+cd ~
+hostname; ~/solana/rel/bin/solana-validator --version
+ssh -t "$1" "
+  set -ex;
+  hostname; rm -f ~/ledger/tower-{,1_9-}$ID.bin;
+  ~/solana/rel/bin/solana-validator --version;
+  if [[ -z \"$force_force\" ]]; then
+    $REMOTE_SOSH/bin/soc;
+  fi;
+"
+
+if [[ -z $force ]]; then
+  ~/solana/rel/bin/solana-validator wait-for-restart-window --min-idle-time 1 --skip-new-snapshot-check
+fi
+$SOSH/bin/sosh-set-config secondary
+if [[ -z $force_force ]]; then
+  ~/solana/rel/bin/solana-validator set-identity ~/active-key/validator-identity.json
+else
+  killall solana-validator || true
+fi
+
+REQUIRE_TOWER=
+for t in ~/ledger/tower-{,1_9-}$ID.bin; do
+  if [[ -r $t ]]; then
+    scp $t "$1":~/ledger/
+  REQUIRE_TOWER="--require-tower"
+  fi
+done
+
+ssh "$1" "set -ex;
+  $REMOTE_SOSH/bin/sosh-set-config primary;
+  ~/solana/rel/bin/solana-validator set-identity ~/active-key/validator-identity.json $REQUIRE_TOWER
+"
+
+echo Success
+exit 0

@@ -10,7 +10,6 @@
   exit 1
 }
 
-
 [[ -L ~/active-key ]] || {
   echo "Error: No active key"
   exit 1
@@ -28,7 +27,6 @@ if [[ $SOSH_CONFIG = secondary ]]; then
 else
   SOSH_VALIDATOR_VOTE_ACCOUNT=~/active-key/validator-vote-account.json
 fi
-
 
 export SOLANA_METRICS_CONFIG=
 export RUST_BACKTRACE=1
@@ -73,6 +71,7 @@ mainnet)
   )
 
   SOSH_HEALTH_CHECK_SLOT_DISTANCE=300
+  RPC_URL=m
   ;;
 testnet)
   ## Request `--rpc-pubsub-enable-vote-subscription`. Impacts performance
@@ -94,6 +93,7 @@ testnet)
     entrypoint3.testnet.solana.com:8001
   )
   SOSH_HEALTH_CHECK_SLOT_DISTANCE=600
+  RPC_URL=t
   ;;
 *)
   echo "Error: Unknown cluster: $SOSH_CLUSTER"

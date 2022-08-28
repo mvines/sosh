@@ -6,6 +6,10 @@
 #   cp sosh-config-default.sh $HOME/sosh-config.sh
 #
 
+if [[ -z $SOSH_CLUSTER ]]; then
+  SOSH_CLUSTER=mainnet
+fi
+
 ## Force the performance governor
 SOSH_PERFORMANCE_GOVERNOR=x
 
@@ -18,6 +22,6 @@ SOSH_PERFORMANCE_GOVERNOR=x
 ## Define a webhook for light notifications
 #SOSH_SLACK_WEBHOOK=somewhere
 
-if [[ -z $SOSH_CLUSTER ]]; then
-  SOSH_CLUSTER=mainnet
-fi
+## Run `tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME` on a restart if
+# running `SOSH_CONFIG=primary` and `SOSH_CLUSTER=mainnet`.
+#SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME=secondary-server-to-ssh-into
