@@ -21,12 +21,12 @@ fi
 SOSH_CONFIG="$(basename "$(readlink ~/active-key)")"
 
 
-SOSH_VALIDATOR_IDENTITY=~/active-key/validator-identity.json
+SOSH_VALIDATOR_IDENTITY=~/keys/"$SOSH_CONFIG"/validator-identity.json
 if [[ $SOSH_CONFIG = secondary ]]; then
   SOSH_VALIDATOR_VOTE_ACCOUNT=~/keys/primary/validator-vote-account.json
   SOSH_AUTHORIZED_VOTER=~/keys/primary/validator-identity.json
 else
-  SOSH_VALIDATOR_VOTE_ACCOUNT=~/active-key/validator-vote-account.json
+  SOSH_VALIDATOR_VOTE_ACCOUNT=~/keys/"$SOSH_CONFIG"/validator-vote-account.json
 fi
 
 export SOLANA_METRICS_CONFIG=
