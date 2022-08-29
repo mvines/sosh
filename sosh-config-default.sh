@@ -25,3 +25,8 @@ SOSH_PERFORMANCE_GOVERNOR=x
 ## Run `tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME` on a restart if
 # running `SOSH_CONFIG=primary` and `SOSH_CLUSTER=mainnet`.
 #SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME=secondary-server-to-ssh-into
+
+## Set rpc pubsub thread count to 0 if not using pubsub
+SOSH_RPC_PUBSUB_NOTIFICATION_THREADS=0
+
+SOSH_HEALTH_CHECK_SLOT_DISTANCE=300

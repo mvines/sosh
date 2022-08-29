@@ -41,9 +41,6 @@ fi
 
 case "$SOSH_CLUSTER" in
 mainnet)
-  ## Set rpc pubsub thread count to 0 if not using pubsub
-  SOSH_RPC_PUBSUB_NOTIFICATION_THREADS=0
-
   SOSH_EXPECTED_GENESIS_HASH=5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d
   SOSH_EXPECTED_SHRED_VERSION=51382
 
@@ -70,7 +67,6 @@ mainnet)
     entrypoint5.mainnet-beta.solana.com:8001
   )
 
-  SOSH_HEALTH_CHECK_SLOT_DISTANCE=300
   RPC_URL=m
   ;;
 testnet)
@@ -92,7 +88,6 @@ testnet)
     entrypoint2.testnet.solana.com:8001
     entrypoint3.testnet.solana.com:8001
   )
-  SOSH_HEALTH_CHECK_SLOT_DISTANCE=600
   RPC_URL=t
   ;;
 *)
