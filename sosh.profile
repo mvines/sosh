@@ -25,7 +25,7 @@ source "$SOSH"/sosh.bashrc
     echo --[ sosh ]------------------------------------
     #shellcheck source=/dev/null
     . "$SOSH"/service-env.sh
-    echo "$(solana --version): $SOLANA_ROOT"
+    echo "$(solana --version): $(readlink -f ~/solana)"
 
     echo --[ active keypairs: $SOSH_CONFIG]-----------
     for keypair in $SOSH_VALIDATOR_IDENTITY $SOSH_VALIDATOR_VOTE_ACCOUNT $SOSH_AUTHORIZED_VOTER; do

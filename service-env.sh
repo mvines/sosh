@@ -1,14 +1,17 @@
 # source this to setup the sosh service environment
 
-[[ -d ~/solana/.git ]] || {
-  echo "Error: ~/solana/.git does not exist";
-  exit 1
-}
+if [[ -z $SOSH_SKIP_SOLANA_SOURCE_CHECK ]]; then
+  [[ -d ~/solana/.git ]] || {
+    echo "Error: ~/solana/.git does not exist";
+    exit 1
+  }
 
-[[ -x ~/solana/rel/bin/solana-validator ]] || {
-  echo "Error: ~/solana/rel/bin/solana-validator not found"
-  exit 1
-}
+  [[ -x ~/solana/rel/bin/solana-validator ]] || {
+    echo "Error: ~/solana/rel/bin/solana-validator not found"
+    exit 1
+  }
+  export PATH=~/solana/rel/bin:"$PATH"
+fi
 
 [[ -L ~/active-key ]] || {
   echo "Error: No active key"
@@ -17,8 +20,6 @@
 
 SOSH_CONFIG="$(basename "$(readlink -f ~/active-key)")"
 
-export PATH=~/solana/rel/bin:"$PATH"
-SOLANA_ROOT="$(readlink -f ~/solana)"
 
 SOSH_VALIDATOR_IDENTITY=~/active-key/validator-identity.json
 if [[ $SOSH_CONFIG = secondary ]]; then
