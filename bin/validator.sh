@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 set -e
 
+here="$(dirname "$0")"
+
 #shellcheck source=/dev/null
-source "$(dirname "$0")"/../service-env.sh
+source "$here"/../service-env.sh
 
 set -x
 
 if [[ $SOSH_CLUSTER = mainnet && $SOSH_CONFIG = primary ]]; then
   if [[ -z $SOS_WAIT_FOR_SUPERMAJORITY ]]; then
     if [[ -n $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME ]]; then
-      tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME
+      "$here"/tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME
 
       # Reload config in case `tranny` changed it
       #shellcheck source=/dev/null
-      source "$(dirname "$0")"/../service-env.sh
+      source "$here"/../service-env.sh
     else
       echo Warn: Unable to tranny on primary restart, SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME not set
     fi
