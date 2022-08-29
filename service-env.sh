@@ -31,8 +31,9 @@ fi
 
 export SOLANA_METRICS_CONFIG=
 export RUST_BACKTRACE=1
-export RUST_LOG=solana=info
-#export RUST_LOG=solana=error
+if [[ -z $RUST_LOG ]]; then
+  export RUST_LOG=solana=info
+fi
 
 if [ -f ~/sosh-config.sh ]; then
   source ~/sosh-config.sh
