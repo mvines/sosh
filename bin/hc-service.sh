@@ -10,7 +10,7 @@ while true; do
       #shellcheck source=/dev/null
       source "$here"/../service-env.sh
 
-      msg="$(hostname): $CONFIG $SOSH_CLUSTER health $curr"
+      msg="$(hostname): $SOSH_CONFIG $SOSH_CLUSTER health $curr"
       if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
         curl -X POST -H 'Content-type: application/json' \
           --data "{\"text\":\"$msg\"}" \
