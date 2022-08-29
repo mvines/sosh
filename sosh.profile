@@ -1,6 +1,6 @@
 # source this file from .profile to add sosh to the PATH
 
-SOSH="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
+export SOSH="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")"
 export PATH="$SOSH"/bin:"$PATH"
 source "$SOSH"/sosh.bashrc
 
