@@ -67,7 +67,9 @@ mainnet)
     entrypoint5.mainnet-beta.solana.com:8001
   )
 
-  RPC_URL=m
+  if [[ -z SOSH_RPC_URL ]]; then
+    SOSH_RPC_URL=m
+  fi
   ;;
 testnet)
   ## Request `--rpc-pubsub-enable-vote-subscription`. Impacts performance
@@ -88,7 +90,10 @@ testnet)
     entrypoint2.testnet.solana.com:8001
     entrypoint3.testnet.solana.com:8001
   )
-  RPC_URL=t
+
+  if [[ -z SOSH_RPC_URL ]]; then
+    SOSH_RPC_URL=t
+  fi
   ;;
 *)
   echo "Error: Unknown cluster: $SOSH_CLUSTER"

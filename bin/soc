@@ -6,8 +6,8 @@ set -e
 source "$(dirname "$0")"/../service-env.sh
 
 args=()
-if [[ -n $RPC_URL ]]; then
-  args+=(--url "$RPC_URL")
+if [[ -n $SOSH_RPC_URL ]]; then
+  args+=(--url "$SOSH_RPC_URL")
 fi
 args+=(catchup ~/active-key/validator-identity.json http://127.0.0.1:8899)
 
