@@ -18,7 +18,7 @@ fi
   exit 1
 }
 
-SOSH_CONFIG="$(basename "$(readlink -f ~/active-key)")"
+SOSH_CONFIG="$(basename "$(readlink ~/active-key)")"
 
 
 SOSH_VALIDATOR_IDENTITY=~/active-key/validator-identity.json
