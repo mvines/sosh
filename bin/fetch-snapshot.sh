@@ -32,11 +32,23 @@ tv)
 esac
 
 set -ex
-cd ~/ledger
+
+if [[ -w /mnt/snapshots/ ]]; then
+  cd /mnt/snapshots
+else
+  cd ~/ledger
+fi
 
 if [[ $2 != i ]]; then
   wget --trust-server-names http://$host/snapshot.tar.bz2
 fi
+
+if [[ -w /mnt/incremental-snapshots/ ]]; then
+  cd /mnt/incremental-snapshots
+else
+  cd ~/ledger
+fi
+
 if [[ $2 != f ]]; then
-  exec wget --trust-server-names http://$host/incremental-snapshot.tar.bz2
+  wget --trust-server-names http://$host/incremental-snapshot.tar.bz2
 fi
