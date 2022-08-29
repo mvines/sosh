@@ -55,7 +55,7 @@ REQUIRE_TOWER=
 for t in ~/ledger/tower-{,1_9-}$ID.bin; do
   if [[ -r $t ]]; then
     scp $t "$1":~/ledger/
-  REQUIRE_TOWER="--require-tower"
+    REQUIRE_TOWER="--require-tower"
   fi
 done
 
