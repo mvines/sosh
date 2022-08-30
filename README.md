@@ -1,4 +1,4 @@
-# Solana Shell Scripts
+# Solana Validator Shell Scripts
 
 ## Approximate Clean Machine Setup
 
