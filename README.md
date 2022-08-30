@@ -59,10 +59,8 @@ EOF"
 ```
 sudo apt-get update
 sudo apt-get install -y git htop silversearcher-ag iotop \
-     libssl-dev libudev-dev \
-     pkg-config zlib1g-dev llvm clang cmake make \
-     libprotobuf-dev protobuf-compiler nvme-cli \
-
+  libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang \
+  cmake make libprotobuf-dev protobuf-compiler nvme-cli
 ```
 
 ### SSH keygen
@@ -99,12 +97,27 @@ If you wish to customize the Sosh configuration
 ```
 cat > ~/sosh-config.sh <<EOF
 # Start with upstream defaults
-source ~/$SOSH/sosh-config-default.sh
+source ~/sosh/sosh-config-default.sh
 
 # Local config overrides go here
-
+EOF
 ```
 and adjust as desired
+
+### Build your validator binaries
+
+Pick the "beta" tree with:
+```
+p beta
+```
+or perhaps "stable":
+```
+p stable
+```
+or even "edge":
+```
+p edge
+```
 
 ### Validator keypairs
 
