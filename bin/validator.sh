@@ -140,7 +140,7 @@ done
 
 if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
   curl -X POST -H 'Content-type: application/json' \
-    --data "{\"text\":\"$(hostname): $CONFIG $SOSH_CLUSTER validator start at $(date): $(solana-validator --version)\"}" \
+    --data "{\"text\":\"$(hostname): $SOSH_CONFIG $SOSH_CLUSTER validator start at $(date): $(solana-validator --version)\"}" \
     $SOSH_SLACK_WEBHOOK || true
 fi
 
