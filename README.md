@@ -172,7 +172,7 @@ If you wish to activate the dev keypair,
 sosh-set-config dev
 ```
 
-### Maybe Setup tmpfs
+#### Maybe Setup tmpfs
 Depending on RAM size add an entry like this to `/etc/fstab`:
 
 128GB RAM machine:
@@ -192,6 +192,11 @@ then
 sudo mkdir /mnt/tmpfs
 sudo mount /mnt/tmpfs
 ```
+
+#### Recommended tmpfs configuration
+* 128GB RAM: incremental snapshots
+* 256GB RAM: incremental snapshots, accounts
+* 512GB RAM: : incremental snapshots, full snapshots, accounts
 
 #### Maybe Adjust FileSystem Usage
 
@@ -238,6 +243,10 @@ location:
 ```
 sudo ln -s /mnt/tmpfs /mnt/incremental-snapshots
 ```
+
+Note that when snapshots are placed in tmpfs you will need to manually recover
+the validator if the system ever reboots by running `fetch-snapshot.sh` with
+usable args.
 
 ### Start the node manually
 ```
