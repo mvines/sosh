@@ -175,6 +175,15 @@ sosh-set-config dev
 ### Maybe Setup tmpfs
 Depending on RAM size add an entry like this to `/etc/fstab`:
 
+128GB RAM machine:
+```
+tmpfs /mnt/tmpfs tmpfs rw,size=32G,user=ops,noatime 0 0
+```
+256GB RAM machine:
+```
+tmpfs /mnt/tmpfs tmpfs rw,size=128G,user=ops,noatime 0 0
+```
+512GB RAM machine:
 ```
 tmpfs /mnt/tmpfs tmpfs rw,size=256G,user=ops,noatime 0 0
 ```
