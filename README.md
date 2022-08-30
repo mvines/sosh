@@ -97,9 +97,14 @@ then restart shell
 
 If you wish to customize the Sosh configuration
 ```
-cp $SOSH/sosh-config-default.sh ~/sosh-config.sh
+cat > ~/sosh-config.sh <<EOF
+# Start with upstream defaults
+source ~/$SOSH/sosh-config-default.sh
+
+# Local config overrides go here
+
 ```
-and edit
+and adjust as desired
 
 ### Validator keypairs
 
