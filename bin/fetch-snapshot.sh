@@ -45,8 +45,6 @@ fi
 
 if [[ -w /mnt/incremental-snapshots/ ]]; then
   cd /mnt/incremental-snapshots
-else
-  cd ~/ledger
 fi
 
 if [[ $2 != f ]]; then
