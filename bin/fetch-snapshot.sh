@@ -40,7 +40,7 @@ else
 fi
 
 if [[ $2 != i ]]; then
-  wget --trust-server-names http://$host/snapshot.tar.bz2
+  wget --backups=1 --trust-server-names http://$host/snapshot.tar.bz2
 fi
 
 if [[ -w /mnt/incremental-snapshots/ ]]; then
@@ -48,5 +48,5 @@ if [[ -w /mnt/incremental-snapshots/ ]]; then
 fi
 
 if [[ $2 != f ]]; then
-  wget --trust-server-names http://$host/incremental-snapshot.tar.bz2
+  wget --backups=1 --trust-server-names http://$host/incremental-snapshot.tar.bz2
 fi
