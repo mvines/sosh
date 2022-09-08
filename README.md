@@ -248,14 +248,24 @@ Note that when snapshots are placed in tmpfs you will need to manually recover
 the validator if the system ever reboots by running `fetch-snapshot.sh` with
 usable args.
 
-### Start the node manually
+### Start the node manually to initialize the ledger
 ```
-validator.sh
+validator.sh init
 ```
-then monitor logs with `t`. Maybe fix stuff, like using `fetch_snapshot.sh` to
-get a snapshot from a specific node
+then monitor logs with `t`. This will prepare ~/ledger and download the correct
+genesis config for the cluster.
 
-### sol service
+### Fetch a current snapshot
+
+Use `fetch_snapshot.sh` to get a snapshot from a specific node.
+
+* Mainnet NA-based nodes, try `fetch_snapshot.sh bv1` or `fetch_snapshot.sh bv2`.
+* Mainnet EU-based nodes, try `fetch_snapshot.sh bv3`
+* Mainnet Asia-based nodes, try `fetch_snapshot.sh bv4`
+* Testnet, try `fetch_snapshot.sh tv`
+
+
+### Start the sol service
 
 ```
 sudo bash -c "cat >/etc/systemd/system/sol.service <<EOF

@@ -59,6 +59,7 @@ args=(
   --full-snapshot-interval-slots 12000
   --incremental-snapshots
   --maximum-incremental-snapshots-to-retain 2
+  --no-snapshot-fetch
   #--maximum-local-snapshot-age 5000
   --no-check-vote-account
   --vote-account $SOSH_VALIDATOR_VOTE_ACCOUNT
@@ -82,7 +83,6 @@ fi
 
 if [[ -r ~/ledger/genesis.bin ]]; then
   args+=(--no-genesis-fetch)
-  args+=(--no-snapshot-fetch)
 fi
 
 if [[ $(solana-validator --version) =~ \ 1\.10\. ]]; then
@@ -117,6 +117,10 @@ if [[ -w /mnt/incremental-snapshots/ ]]; then
   args+=(--incremental-snapshot-archive-path /mnt/incremental-snapshots)
 fi
 
+for tv in "${SOSH_KNOWN_VALIDATORS[@]}"; do
+  args+=(--known-validator "$tv")
+done
+
 for e in "${SOSH_ENTRYPOINTS[@]}"; do
   args+=(--entrypoint "$e")
 done
@@ -135,14 +139,10 @@ elif [[ -n "$SOSH_WAIT_FOR_SUPERMAJORITY" ]]; then
   exit 1
 fi
 
-for tv in "${SOSH_KNOWN_VALIDATORS[@]}"; do
-  args+=(--known-validator "$tv")
-done
-
 if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
   curl -X POST -H 'Content-type: application/json' \
     --data "{\"text\":\"$(hostname): $SOSH_CONFIG $SOSH_CLUSTER validator start at $(date): $(solana-validator --version)\"}" \
     $SOSH_SLACK_WEBHOOK || true
 fi
 
-exec solana-validator "${args[@]}"
+exec solana-validator "${args[@]}" "$@"
