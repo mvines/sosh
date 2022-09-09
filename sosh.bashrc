@@ -1,6 +1,6 @@
 # source this from .bashrc to setup the sosh interactive environment
 
-alias so='solana'
+alias so='~/solana/rel/bin/solana'
 alias sob='so balance'
 alias sor='so confirm -v'
 alias sol='so leader-schedule'
@@ -20,7 +20,7 @@ alias soh='so stake-history'
 alias sova='so vote-account'
 alias sosa='so stake-account'
 
-alias sv='solana-validator'
+alias sv='~/solana/rel/bin/solana-validator'
 alias svm='sv monitor'
 alias sve='sv exit'
 alias svem='sve -m'
