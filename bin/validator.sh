@@ -88,7 +88,7 @@ if [[ $(solana-validator --version) =~ \ 1\.10\. ]]; then
 else
   echo 1.11 or greater detected
   args+=(--no-os-disk-stats-reporting)
-  args+=(--tpu-enable-udp) # keep UDP enabled for now..
+  #args+=(--tpu-enable-udp)
 fi
 
 if [[ -n $SOSH_AUTHORIZED_VOTER ]]; then
