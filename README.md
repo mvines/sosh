@@ -1,8 +1,8 @@
 # Solana Validator Shell Scripts
 
-## Approximate Clean Machine Setup
+This project contains useful scripts for easily running a Solana validator on a fresh Ubuntu 20.04 machine. It uses my ([mvines](https://github.com/mvines)) preferred Solana mainnet settings and best practices. The command names are slightly quirky, and currently not too well documented
 
-Start with a fresh Ubuntu 20.04 machine
+## Approximate Clean Machine Setup
 
 ### Rust
 ```
