@@ -78,8 +78,8 @@ ssh-keygen -t ed25519 && cat .ssh/id_ed25519.pub
 for ch in edge beta stable; do \
   git clone https://github.com/solana-labs/solana.git ~/$ch; \
 done; \
-(cd ~/beta; git checkout v1.11); \
-(cd ~/stable; git checkout v1.10); \
+(cd ~/beta; git checkout v1.14); \
+(cd ~/stable; git checkout v1.13); \
 ln -sf beta ~/solana
 ```
 
