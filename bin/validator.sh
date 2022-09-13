@@ -83,13 +83,17 @@ if [[ -r ~/ledger/genesis.bin ]]; then
   args+=(--no-genesis-fetch)
 fi
 
-if [[ $(solana-validator --version) =~ \ 1\.10\. ]]; then
-  echo 1.10 detected
-else
-  echo 1.11 or greater detected
+v="$(solana-validator --version)"
+echo "Version: $v"
+case $v in
+*\ 1.10.*|*\ 1.13.*)
+  echo Solana 1.10/1.13 detected
+  ;;
+*)
+  echo Solana 1.11/1.14 or greater detected
   args+=(--no-os-disk-stats-reporting)
-  #args+=(--tpu-enable-udp)
-fi
+  ;;
+esac
 
 if [[ -n $SOSH_AUTHORIZED_VOTER ]]; then
   args+=(--authorized-voter "$SOSH_AUTHORIZED_VOTER")
