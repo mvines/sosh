@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
 
-if [[ -z $1 ]]; then
-  echo "Usage: $0 <tree> [nobuild]"
-  exit 0
-fi
-
 shopt -s nullglob
-matches=(~/$1*)
-if [[ ${#matches[*]} = 0 ]]; then
-  echo "Error: Unknown solana tree: $1"
-  exit 1
-elif [[ ${#matches[*]} != 1 ]]; then
-  echo "Error: Multiple matches for '$1': ${matches[*]}"
-  exit 1
+
+if [[ -z $1 ]]; then
+  SOLANA=~/solana
+else
+  matches=(~/$1*)
+  if [[ ${#matches[*]} = 0 ]]; then
+    echo "Error: Unknown solana tree: $1"
+    exit 1
+  elif [[ ${#matches[*]} != 1 ]]; then
+    echo "Error: Multiple matches for '$1': ${matches[*]}"
+    exit 1
+  fi
+
+  SOLANA=${matches[0]}
 fi
-SOLANA=${matches[0]}
 
 if [[ ! -d $SOLANA/.git ]]; then
   echo "Error: $SOLANA/.git does not exist"
@@ -47,7 +48,7 @@ else
   ) || exit $?
 fi
 
-(
+[[ $SOLANA = ~/solana ]] || (
   set -x
   ln -sf -T $SOLANA ~/solana
 )
