@@ -21,8 +21,8 @@ alias sova='so vote-account'
 alias sosa='so stake-account'
 
 alias sv='~/solana/rel/bin/solana-validator'
-alias svm='sv monitor'
-alias sve='sv exit'
+alias svm='sv --ledger ~/ledger monitor'
+alias sve='sv --ledger ~/ledger exit'
 alias svem='sve -m'
 
 alias si='solana-install'
