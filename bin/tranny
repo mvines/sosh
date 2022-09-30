@@ -27,7 +27,7 @@ REMOTE_SOSH="~/sosh"
 source "$SOSH"/service-env.sh
 
 ID_JSON=~/keys/primary/validator-identity.json
-ID="$(set -x; solana-keygen pubkey $ID_JSON)"
+ID="$(set -x; ~/solana/rel/bin/solana-keygen pubkey $ID_JSON)"
 echo "ID=$ID"
 set -x
 cd ~
