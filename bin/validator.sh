@@ -9,7 +9,7 @@ source "$here"/../service-env.sh
 set -x
 
 if [[ $SOSH_CLUSTER = mainnet && $SOSH_CONFIG = primary ]]; then
-  if [[ -z $SOS_WAIT_FOR_SUPERMAJORITY ]]; then
+  if [[ -z $SOSH_WAIT_FOR_SUPERMAJORITY ]]; then
     if [[ -n $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME ]]; then
       "$here"/tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME
 
