@@ -69,7 +69,7 @@ mainnet)
     entrypoint5.mainnet-beta.solana.com:8001
   )
 
-  if [[ -z SOSH_RPC_URL ]]; then
+  if [[ -z $SOSH_RPC_URL ]]; then
     SOSH_RPC_URL=m
   fi
   ;;
@@ -90,7 +90,7 @@ testnet)
     entrypoint3.testnet.solana.com:8001
   )
 
-  if [[ -z SOSH_RPC_URL ]]; then
+  if [[ -z $SOSH_RPC_URL ]]; then
     SOSH_RPC_URL=t
   fi
   ;;
