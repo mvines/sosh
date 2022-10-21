@@ -158,7 +158,7 @@ If you wish to activate the secondary keypair,
 sosh-set-config secondary
 ```
 
-Later run `tranny <secondary-host>` from your primary to transfer voting to the
+Later run `xferid <secondary-host>` from your primary to transfer voting to the
 secondary.
 
 #### Other keypairs...

@@ -23,9 +23,9 @@ SOSH_ACCOUNTS_INDEX_MEMORY_LIMIT_MB=10000
 ## Define a webhook for light notifications
 #SOSH_SLACK_WEBHOOK=somewhere
 
-## Run `tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME` on a restart if
+## Run `xferid -f -f $SOSH_RESTART_XFERID_FAILOVER_HOSTNAME` on a restart if
 # running `SOSH_CONFIG=primary` and `SOSH_CLUSTER=mainnet`.
-#SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME=secondary-server-to-ssh-into
+#SOSH_RESTART_XFERID_FAILOVER_HOSTNAME=secondary-server-to-ssh-into
 
 ## Set rpc pubsub thread count to 0 if not using pubsub
 SOSH_RPC_PUBSUB_NOTIFICATION_THREADS=0

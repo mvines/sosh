@@ -10,17 +10,17 @@ set -x
 
 if [[ $SOSH_CLUSTER = mainnet && $SOSH_CONFIG = primary ]]; then
   if [[ -z $SOSH_WAIT_FOR_SUPERMAJORITY ]]; then
-    if [[ -n $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME ]]; then
-      "$here"/tranny -f -f $SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME
+    if [[ -n $SOSH_RESTART_XFERID_FAILOVER_HOSTNAME ]]; then
+      "$here"/xferid -f -f $SOSH_RESTART_XFERID_FAILOVER_HOSTNAME
 
-      # Reload config in case `tranny` changed it
+      # Reload config in case `xferid` changed it
       #shellcheck source=/dev/null
       source "$here"/../service-env.sh
     else
-      echo Warn: Unable to tranny on primary restart, SOSH_RESTART_TRANNY_FAILOVER_HOSTNAME not set
+      echo Warn: Unable to xferid on primary restart, SOSH_RESTART_XFERID_FAILOVER_HOSTNAME not set
     fi
   else
-    echo No tranny on cluster restart
+    echo No xferid on cluster restart
   fi
 fi
 
