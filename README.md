@@ -323,3 +323,40 @@ and
 ```
 t
 ```
+
+### Stop the sol service
+
+```
+soshs
+````
+
+### Clean sol service restart
+
+```
+svem   # Alias for `solana-validator exit --monitor`
+```
+
+### Update validator binaries
+
+To fetch the latest commits for your current source tree:
+```
+p
+```
+
+then use `svem` to restart the sol service
+
+
+Syncing to a specific tag, rather than HEAD of your current source tree, is a
+little clumsy currently with a "p <treename> <tagname>":
+```
+p beta v1.13.5
+```
+
+### Revert to previous validator binaries
+So you updated your validator binaries and something bad happened. Quickly
+revert to the previous binaries with:
+```
+lkg
+```
+then use `svem` to restart the sol service
+
