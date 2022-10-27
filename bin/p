@@ -24,30 +24,40 @@ if [[ ! -d $SOLANA/.git ]]; then
   exit 1
 fi
 
-if [[ $2 = nobuild ]]; then
-  echo Build skipped
-else
-  (
-    cd $SOLANA
-    git tag --force lkg
-    export CI_COMMIT=$(git rev-parse HEAD)
-    LKG=$(git rev-parse lkg)
-    REL="rel.$CI_COMMIT"
-    set -x
+(
+  cd $SOLANA
+  set -x
+  PREV_COMMIT=$(git rev-parse HEAD)
+  CURRENT_BRANCH=$(git branch --show-current)
 
-    git pull --rebase
-    git show --summary
-    ./scripts/cargo-install-all.sh --validator-only "$REL"
-    git log -n 256 > "$REL"/log
-    echo "$LKG" > "$REL"/lkg
-    rm -rf rel
-    ln -sf "$REL" rel
-
-    if [[ $(ls -dt rel.* | wc -l) -gt 5 ]]; then
-      ls -dt rel.* | tail -n+6 | xargs rm -rf
+  git fetch
+  if [[ -n $2 ]]; then
+    git checkout $2
+  else
+    if [[ -n $CURRENT_BRANCH ]]; then
+      git pull --rebase
+    else
+      echo "Not a branch, source unchanged"
     fi
-  )
-fi
+  fi
+  git show --summary
+
+  export CI_COMMIT=$(git rev-parse HEAD)
+  REL="rel.$CI_COMMIT"
+  ./scripts/cargo-install-all.sh --validator-only "$REL"
+
+  if [[ $PREV_COMMIT != $CI_COMMIT ]]; then
+    git log -n 256 > "$REL"/log
+    echo "$PREV_COMMIT" > "$REL"/lkg
+  fi
+
+  rm -rf rel
+  ln -sf "$REL" rel
+
+  if [[ $(ls -dt rel.* | wc -l) -gt 5 ]]; then
+    ls -dt rel.* | tail -n+6 | xargs rm -rf
+  fi
+)
 
 [[ $SOLANA = ~/solana ]] || (
   set -x
