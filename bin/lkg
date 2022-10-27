@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# Danger: much of this script is duplicated within `p`. Modifications here may #
+# also be necessary yonder.
+#
+
+set -e
+
+shopt -s nullglob
+
+if [[ -z $1 ]]; then
+  SOLANA=~/solana
+else
+  matches=(~/$1*)
+  if [[ ${#matches[*]} = 0 ]]; then
+    echo "Error: Unknown solana tree: $1"
+    exit 1
+  elif [[ ${#matches[*]} != 1 ]]; then
+    echo "Error: Multiple matches for '$1': ${matches[*]}"
+    exit 1
+  fi
+
+  SOLANA=${matches[0]}
+fi
+
+if [[ ! -d $SOLANA/.git ]]; then
+  echo "Error: $SOLANA/.git does not exist"
+  exit 1
+fi
+
+(
+  cd $SOLANA
+  set -x
+
+  LKG=$(cat rel/lkg)
+  REL="rel.$LKG"
+
+  if [[ ! -d $REL ]]; then
+    echo Error: Directory does not exist: $REL
+    exit 1
+  fi
+
+  rm -rf rel
+  ln -sf "$REL" rel
+
+  echo "Successfully reverted to $LKG"
+)
+
+[[ $SOLANA = ~/solana ]] || (
+  set -x
+  ln -sf -T $SOLANA ~/solana
+)

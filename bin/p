@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# Danger: much of this script is duplicated within `lkg`. Modifications here may #
+# also be necessary yonder.
+#
 
 set -e
 
