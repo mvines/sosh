@@ -32,8 +32,8 @@ fi
   cd $SOLANA
   set -x
 
-  LKG=$(cat rel/lkg)
-  REL="rel.$LKG"
+  PREV_COMMIT=$(cat rel/lkg)
+  REL="rel.$PREV_COMMIT"
 
   if [[ ! -d $REL ]]; then
     echo Error: Directory does not exist: $REL
@@ -43,7 +43,7 @@ fi
   rm -rf rel
   ln -sf "$REL" rel
 
-  echo "Successfully reverted to $LKG"
+  echo "Successfully reverted to $PREV_COMMIT"
 )
 
 [[ $SOLANA = ~/solana ]] || (

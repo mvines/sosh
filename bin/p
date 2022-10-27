@@ -31,13 +31,11 @@ fi
 (
   cd $SOLANA
   set -x
-  PREV_COMMIT=$(git rev-parse HEAD)
-  CURRENT_BRANCH=$(git branch --show-current)
-
-  git fetch
   if [[ -n $2 ]]; then
+    git fetch
     git checkout $2
   else
+    CURRENT_BRANCH=$(git branch --show-current)
     if [[ -n $CURRENT_BRANCH ]]; then
       git pull --rebase
     else
@@ -49,6 +47,12 @@ fi
   export CI_COMMIT=$(git rev-parse HEAD)
   REL="rel.$CI_COMMIT"
   ./scripts/cargo-install-all.sh --validator-only "$REL"
+
+  if [[ -L rel ]]; then
+    PREV_COMMIT=$(readlink rel | cut -b 5-)
+  else
+    PREV_COMMIT=
+  fi
 
   if [[ $PREV_COMMIT != $CI_COMMIT ]]; then
     git log -n 256 > "$REL"/log
