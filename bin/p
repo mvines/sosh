@@ -46,6 +46,7 @@ fi
 
   export CI_COMMIT=$(git rev-parse HEAD)
   REL="rel.$CI_COMMIT"
+  export RUSTFLAGS="-C target-cpu=native"
   ./scripts/cargo-install-all.sh --validator-only "$REL"
 
   if [[ -L rel ]]; then
