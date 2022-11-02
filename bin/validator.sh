@@ -35,7 +35,8 @@ find ~/ledger/ -name 'snapshot-*' -size 0 -print -exec rm {} \; || true
 
 args=(
   --no-untrusted-rpc
-  --dynamic-port-range 8000-8022
+  --gossip-port $SOSH_GOSSIP_PORT
+  --dynamic-port-range $SOSH_GOSSIP_PORT-$((SOSH_GOSSIP_PORT + 22))
   --identity $SOSH_VALIDATOR_IDENTITY
   --ledger ~/ledger
   --expected-genesis-hash $SOSH_EXPECTED_GENESIS_HASH
@@ -65,7 +66,6 @@ args=(
 
 if [[ -n $SOSH_RPC_PUBSUB_ENABLE_VOTE_SUBSCRIPTION ]]; then
   args+=(--rpc-pubsub-enable-vote-subscription)
-
 fi
 
 if [[ -n $SOSH_RPC_PUBSUB_NOTIFICATION_THREADS ]]; then

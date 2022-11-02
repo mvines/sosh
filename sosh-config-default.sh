@@ -10,6 +10,8 @@ if [[ -z $SOSH_CLUSTER ]]; then
   SOSH_CLUSTER=mainnet
 fi
 
+SOSH_GOSSIP_PORT=8000
+
 ## Force the performance governor
 SOSH_PERFORMANCE_GOVERNOR=x
 
