@@ -60,9 +60,12 @@ args=(
   --full-snapshot-interval-slots 12000
   --maximum-incremental-snapshots-to-retain 2
   --no-snapshot-fetch
-  --no-check-vote-account
   --vote-account $SOSH_VALIDATOR_VOTE_ACCOUNT
 )
+
+if [[ -n $SOSH_GOSSIP_HOST ]]; then
+  args+=(--gossip-host $SOSH_GOSSIP_HOST)
+fi
 
 if [[ -n $SOSH_RPC_PUBSUB_ENABLE_VOTE_SUBSCRIPTION ]]; then
   args+=(--rpc-pubsub-enable-vote-subscription)
