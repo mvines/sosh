@@ -23,7 +23,7 @@ bw2)
   host=145.40.93.71
   ;;
 tv)
-  host=testnet.solana.com
+  host=api.testnet.solana.com
   ;;
 *)
   echo "Error: unknown validator: '$1'"
