@@ -156,8 +156,10 @@ if [[ -n $JITO ]]; then
     --relayer-address $RELAYER_URL:8100
     --block-engine-address $BLOCK_ENGINE_URL:1003
     --block-engine-auth-service-address $BLOCK_ENGINE_URL:1005
-    --shred-receiver-address $SHRED_RECEIVER_ADDR
   )
+  if [[ -n $SHRED_RECEIVER_ADDR ]]; then
+    args+=(--shred-receiver-address $SHRED_RECEIVER_ADDR)
+  fi
 fi
 
 if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
