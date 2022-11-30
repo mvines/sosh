@@ -144,6 +144,22 @@ elif [[ -n "$SOSH_WAIT_FOR_SUPERMAJORITY" ]]; then
   exit 1
 fi
 
+if [[ -n $JITO ]]; then
+  echo Jito detected
+  args+=(
+    --tip-payment-program-pubkey $TIP_PAYMENT_PROGRAM_PUBKEY
+    --tip-distribution-program-pubkey $TIP_DISTRIBUTION_PROGRAM_PUBKEY
+    --merkle-root-upload-authority $MERKLE_ROOT_UPLOAD_AUTHORITY
+    --tip-distribution-account-payer $SOSH_VALIDATOR_IDENTITY \
+    --commission-bps $COMMISSION_BPS
+    --relayer-auth-service-address $RELAYER_URL:8100
+    --relayer-address $RELAYER_URL:8100
+    --block-engine-address $BLOCK_ENGINE_URL:1003
+    --block-engine-auth-service-address $BLOCK_ENGINE_URL:1005
+    --shred-receiver-address $SHRED_RECEIVER_ADDR
+  )
+fi
+
 if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
   curl -X POST -H 'Content-type: application/json' \
     --data "{\"text\":\"$(hostname): $SOSH_CONFIG $SOSH_CLUSTER validator start at $(date): $(solana-validator --version)\"}" \

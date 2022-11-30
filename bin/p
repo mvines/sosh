@@ -47,6 +47,11 @@ fi
   export CI_COMMIT=$(git rev-parse HEAD)
   REL="rel.$CI_COMMIT"
   export RUSTFLAGS="-C target-cpu=native"
+
+  # The jito tree uses git submodules to pull in additional deps
+  if [[ -r .gitmodules ]]; then
+    git submodule update --init --recursive
+  fi
   ./scripts/cargo-install-all.sh --validator-only "$REL"
 
   if [[ -L rel ]]; then
