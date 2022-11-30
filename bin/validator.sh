@@ -146,11 +146,15 @@ fi
 
 if [[ -n $JITO ]]; then
   echo Jito detected
+
+  if [[ -z TIP_DISTRIBUTION_ACCOUNT_PAYER ]]; then
+    TIP_DISTRIBUTION_ACCOUNT_PAYER=$SOSH_VALIDATOR_IDENTITY
+  fi
   args+=(
     --tip-payment-program-pubkey $TIP_PAYMENT_PROGRAM_PUBKEY
     --tip-distribution-program-pubkey $TIP_DISTRIBUTION_PROGRAM_PUBKEY
     --merkle-root-upload-authority $MERKLE_ROOT_UPLOAD_AUTHORITY
-    --tip-distribution-account-payer $SOSH_VALIDATOR_IDENTITY \
+    --tip-distribution-account-payer $TIP_DISTRIBUTION_ACCOUNT_PAYER
     --commission-bps $COMMISSION_BPS
     --relayer-auth-service-address $RELAYER_URL:8100
     --relayer-address $RELAYER_URL:8100
