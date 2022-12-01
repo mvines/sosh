@@ -77,14 +77,16 @@ mainnet)
   TIP_PAYMENT_PROGRAM_PUBKEY=T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt
   TIP_DISTRIBUTION_PROGRAM_PUBKEY=4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7
   MERKLE_ROOT_UPLOAD_AUTHORITY=GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
-  COMMISSION_BPS=800
+  : ${COMMISSION_BPS:=800}
 
   # `~/sosh-config.sh` may override the default Jito config if desired
   #
   # See https://jito-labs.gitbook.io/mev/systems/connecting/mainnet
-  BLOCK_ENGINE_URL=https://frankfurt.mainnet.block-engine.jito.wtf
-  RELAYER_URL=http://frankfurt.mainnet.relayer.jito.wtf
-  SHRED_RECEIVER_ADDR=145.40.93.84:1002
+  if [[ -z $BLOCK_ENGINE_URL ]]; then
+    BLOCK_ENGINE_URL=https://frankfurt.mainnet.block-engine.jito.wtf
+    RELAYER_URL=http://frankfurt.mainnet.relayer.jito.wtf
+    SHRED_RECEIVER_ADDR=145.40.93.84:1002
+  fi
 
   if [[ -z $SOSH_RPC_URL ]]; then
     SOSH_RPC_URL=m
@@ -115,13 +117,15 @@ testnet)
   TIP_PAYMENT_PROGRAM_PUBKEY=7JCWzUcPQvA4PHAWzeckkDgfCMZHu9c42LzULg6cC2N8
   TIP_DISTRIBUTION_PROGRAM_PUBKEY=FhKaSCWdhK86Mbccwtz7xvfqQpjbrmWgsHExrXbmAzVW
   MERKLE_ROOT_UPLOAD_AUTHORITY=GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
-  COMMISSION_BPS=800
 
+  : ${COMMISSION_BPS:=800}
   # `~/sosh-config.sh` may override the default Jito config if desired
   # See https://jito-labs.gitbook.io/mev/systems/connecting/testnet
-  BLOCK_ENGINE_URL=https://dallas.testnet.block-engine.jito.wtf
-  RELAYER_URL=http://dallas.testnet.relayer.jito.wtf
-  SHRED_RECEIVER_ADDR=147.28.154.132:1002
+  if [[ -z $BLOCK_ENGINE_URL ]]; then
+    BLOCK_ENGINE_URL=https://dallas.testnet.block-engine.jito.wtf
+    RELAYER_URL=http://dallas.testnet.relayer.jito.wtf
+    SHRED_RECEIVER_ADDR=147.28.154.132:1002
+  fi
   ;;
 *)
   echo "Error: Unknown cluster: $SOSH_CLUSTER"
