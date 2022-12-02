@@ -85,7 +85,7 @@ mainnet)
   if [[ -z $BLOCK_ENGINE_URL ]]; then
     BLOCK_ENGINE_URL=https://frankfurt.mainnet.block-engine.jito.wtf
     RELAYER_URL=http://frankfurt.mainnet.relayer.jito.wtf
-    SHRED_RECEIVER_ADDR=145.40.93.84:1002
+    #SHRED_RECEIVER_ADDR=145.40.93.84:1002
   fi
 
   if [[ -z $SOSH_RPC_URL ]]; then
@@ -124,7 +124,7 @@ testnet)
   if [[ -z $BLOCK_ENGINE_URL ]]; then
     BLOCK_ENGINE_URL=https://dallas.testnet.block-engine.jito.wtf
     RELAYER_URL=http://dallas.testnet.relayer.jito.wtf
-    SHRED_RECEIVER_ADDR=147.28.154.132:1002
+    #SHRED_RECEIVER_ADDR=147.28.154.132:1002
   fi
   ;;
 *)
