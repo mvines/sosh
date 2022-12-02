@@ -147,7 +147,7 @@ fi
 if [[ -n $JITO ]]; then
   echo Jito detected
 
-  if [[ -z TIP_DISTRIBUTION_ACCOUNT_PAYER ]]; then
+  if [[ -z $TIP_DISTRIBUTION_ACCOUNT_PAYER ]]; then
     TIP_DISTRIBUTION_ACCOUNT_PAYER=$SOSH_VALIDATOR_IDENTITY
   fi
   args+=(
