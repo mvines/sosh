@@ -186,7 +186,7 @@ tmpfs /mnt/tmpfs tmpfs rw,size=32G,user=ops,noatime 0 0
 ```
 256GB RAM machine:
 ```
-tmpfs /mnt/tmpfs tmpfs rw,size=128G,user=ops,noatime 0 0
+tmpfs /mnt/tmpfs tmpfs rw,size=160G,user=ops,noatime 0 0
 ```
 512GB RAM machine:
 ```
