@@ -22,6 +22,9 @@ bv4)
 bw2)
   host=145.40.93.71
   ;;
+mapi)
+  host=api.mainnet-beta.solana.com
+  ;;
 tv)
   host=api.testnet.solana.com
   ;;
