@@ -76,7 +76,10 @@ if [[ -n $SOSH_RPC_PUBSUB_NOTIFICATION_THREADS ]]; then
 fi
 
 if [[ -n $SOSH_ACCOUNTS_INDEX_MEMORY_LIMIT_MB ]]; then
-  args+=(--accounts-index-memory-limit-mb $SOSH_ACCOUNTS_INDEX_MEMORY_LIMIT_MB)
+  args+=(
+    --enable-accounts-disk-index
+    --accounts-index-memory-limit-mb $SOSH_ACCOUNTS_INDEX_MEMORY_LIMIT_MB
+  )
 else
   args+=(--disable-accounts-disk-index)
 fi
