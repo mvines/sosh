@@ -150,19 +150,13 @@ fi
 if [[ -n $JITO ]]; then
   echo Jito detected
 
-  if [[ -z $TIP_DISTRIBUTION_ACCOUNT_PAYER ]]; then
-    TIP_DISTRIBUTION_ACCOUNT_PAYER=$SOSH_VALIDATOR_IDENTITY
-  fi
   args+=(
     --tip-payment-program-pubkey $TIP_PAYMENT_PROGRAM_PUBKEY
     --tip-distribution-program-pubkey $TIP_DISTRIBUTION_PROGRAM_PUBKEY
     --merkle-root-upload-authority $MERKLE_ROOT_UPLOAD_AUTHORITY
-    --tip-distribution-account-payer $TIP_DISTRIBUTION_ACCOUNT_PAYER
     --commission-bps $COMMISSION_BPS
-    --relayer-auth-service-address $RELAYER_URL:8100
-    --relayer-address $RELAYER_URL:8100
-    --block-engine-address $BLOCK_ENGINE_URL:1003
-    --block-engine-auth-service-address $BLOCK_ENGINE_URL:1005
+    --relayer-url $RELAYER_URL
+    --block-engine-url $BLOCK_ENGINE_URL
   )
   if [[ -n $SHRED_RECEIVER_ADDR ]]; then
     args+=(--shred-receiver-address $SHRED_RECEIVER_ADDR)

@@ -77,11 +77,11 @@ mainnet)
   TIP_PAYMENT_PROGRAM_PUBKEY=T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt
   TIP_DISTRIBUTION_PROGRAM_PUBKEY=4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7
   MERKLE_ROOT_UPLOAD_AUTHORITY=GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
-  : ${COMMISSION_BPS:=800}
+  : ${COMMISSION_BPS:=10000}
 
   # `~/sosh-config.sh` may override the default Jito config if desired
   #
-  # See https://jito-labs.gitbook.io/mev/systems/connecting/mainnet
+  # See https://jito-labs.gitbook.io/mev/searcher-resources/block-engine/mainnet-addresses
   if [[ -z $BLOCK_ENGINE_URL ]]; then
     BLOCK_ENGINE_URL=https://frankfurt.mainnet.block-engine.jito.wtf
     RELAYER_URL=http://frankfurt.mainnet.relayer.jito.wtf
@@ -126,7 +126,7 @@ testnet)
   # See https://jito-labs.gitbook.io/mev/systems/connecting/testnet
   if [[ -z $BLOCK_ENGINE_URL ]]; then
     BLOCK_ENGINE_URL=https://dallas.testnet.block-engine.jito.wtf
-    RELAYER_URL=http://dallas.testnet.relayer.jito.wtf
+    RELAYER_URL=http://dallas.testnet.relayer.jito.wtf:8100
     #SHRED_RECEIVER_ADDR=147.28.154.132:1002
   fi
   ;;
