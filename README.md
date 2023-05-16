@@ -175,6 +175,8 @@ sosh-set-config dev
 ```
 
 #### Maybe Setup tmpfs
+**WARNING: The information in this section was formulated in Fall 2022, and may no longer be suitable for the currently-recommended validator software release and mainnet state. Caveat emptor.**
+
 Depending on RAM size add an entry like this to `/etc/fstab`:
 
 128GB RAM machine:
