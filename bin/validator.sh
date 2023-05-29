@@ -44,9 +44,10 @@ args=(
   --contact-debug-interval 120000
   --log ~/solana-validator.log
   --no-port-check
-  --no-os-memory-stats-reporting
-  --no-os-network-stats-reporting
   --no-os-cpu-stats-reporting
+  --no-os-memory-stats-reporting
+  --no-os-network-limits-test
+  --no-os-network-stats-reporting
   --private-rpc
   --rpc-bind-address 127.0.0.1
   --rpc-port 8899
