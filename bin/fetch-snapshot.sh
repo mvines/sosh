@@ -28,6 +28,9 @@ mapi)
 tv)
   host=api.testnet.solana.com
   ;;
+t)
+  host=testnet.solana.com
+  ;;
 *)
   echo "Error: unknown validator: '$1'"
   exit 1
