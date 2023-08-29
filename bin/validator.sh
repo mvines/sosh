@@ -92,14 +92,16 @@ fi
 v="$(solana-validator --version)"
 echo "Version: $v"
 case $v in
-*\ 1.10.*|*\ 1.13.*)
-  echo Solana 1.10/1.13 detected
+*\ 1.14.*|*\ 1.13.*)
+  echo Solana 1.14/1.13 detected
   ;;
 *)
-  echo Solana 1.11/1.14 or greater detected
-  args+=(--no-os-disk-stats-reporting)
+  echo Solana 1.16 or greater detected
+  args+=(--replay-slots-concurrently)
   ;;
 esac
+
+args+=(--no-os-disk-stats-reporting)
 
 if [[ -n $SOSH_AUTHORIZED_VOTER ]]; then
   args+=(--authorized-voter "$SOSH_AUTHORIZED_VOTER")
