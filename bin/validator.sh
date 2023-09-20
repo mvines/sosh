@@ -95,9 +95,14 @@ case $v in
 *\ 1.14.*|*\ 1.13.*)
   echo Solana 1.14/1.13 detected
   ;;
-*)
-  echo Solana 1.16 or greater detected
+*\ 1.16.*)
+  echo Solana 1.16 detected
   args+=(--replay-slots-concurrently)
+  ;;
+*)
+  echo Solana 1.17 or greater detected
+  args+=(--replay-slots-concurrently)
+  args+=(--use-snapshot-archives-at-startup when-newest)
   ;;
 esac
 
