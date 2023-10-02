@@ -33,7 +33,9 @@ else
   SOSH_VALIDATOR_VOTE_ACCOUNT=~/keys/"$SOSH_CONFIG"/validator-vote-account.json
 fi
 
-export SOLANA_METRICS_CONFIG=
+unset SOLANA_METRICS_CONFIG
+export SOLANA_METRICS_CONFIG
+
 export RUST_BACKTRACE=1
 if [[ -z $RUST_LOG ]]; then
   export RUST_LOG=solana=info
