@@ -15,7 +15,7 @@ source "$SOSH"/sosh.bashrc
     export PS4="==> "
     set -x
     hc
-    df -h . /mnt/tmpfs*
+    df -h . /mnt/{nvme*,tmpfs*}
     ded
     free -h
     uptime
