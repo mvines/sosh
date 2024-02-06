@@ -102,7 +102,7 @@ case $v in
 *)
   echo Solana 1.17 or greater detected
   args+=(--replay-slots-concurrently)
-  args+=(--use-snapshot-archives-at-startup when-newest)
+  #args+=(--use-snapshot-archives-at-startup when-newest)
   ;;
 esac
 
