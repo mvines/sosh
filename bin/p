@@ -54,6 +54,12 @@ fi
   fi
   ./scripts/cargo-install-all.sh --validator-only "$REL"
 
+  for program in validator install ledger-tool watchtower; do
+    if [[ -x "$REL"/bin/agave-"$program" ]]; then
+      ln -sfv -T agave-"$program" "$REL"/bin/solana-"$program"
+    fi
+  done
+
   if [[ -L rel ]]; then
     PREV_COMMIT=$(readlink rel | cut -b 5-)
   else
