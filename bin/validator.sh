@@ -99,8 +99,19 @@ case $v in
   echo Solana 1.16 detected
   args+=(--replay-slots-concurrently)
   ;;
+*\ 1.17.*)
+  echo Solana 1.17 detected
+  args+=(--replay-slots-concurrently)
+  #args+=(--use-snapshot-archives-at-startup when-newest)
+  ;;
+*\ 1.18.*)
+  echo Solana 1.18 detected
+  args+=(--replay-slots-concurrently)
+  args+=(--block-production-method central-scheduler)
+  #args+=(--use-snapshot-archives-at-startup when-newest)
+  ;;
 *)
-  echo Solana 1.17 or greater detected
+  echo Solana 1.19 or greater detected
   args+=(--replay-slots-concurrently)
   #args+=(--use-snapshot-archives-at-startup when-newest)
   ;;
