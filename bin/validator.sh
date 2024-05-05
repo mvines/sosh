@@ -59,7 +59,8 @@ args=(
   --rocksdb-shred-compaction fifo
   --accounts-db-skip-shrink
   --full-snapshot-interval-slots 12000
-  --maximum-incremental-snapshots-to-retain 2
+  --maximum-full-snapshots-to-retain 1
+  --maximum-incremental-snapshots-to-retain 1
   --no-snapshot-fetch
   --vote-account $SOSH_VALIDATOR_VOTE_ACCOUNT
 )
