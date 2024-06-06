@@ -43,16 +43,16 @@ args=(
   --limit-ledger-size $SOSH_LIMIT_LEDGER_SIZE
   --contact-debug-interval 120000
   --log ~/solana-validator.log
-  --no-port-check
-  --no-os-cpu-stats-reporting
-  --no-os-memory-stats-reporting
-  --no-os-network-limits-test
-  --no-os-network-stats-reporting
+  #--no-port-check
+  #--no-os-cpu-stats-reporting
+  #--no-os-memory-stats-reporting
+  #--no-os-network-limits-test
+  #--no-os-network-stats-reporting
   --private-rpc
   --rpc-bind-address 127.0.0.1
   --rpc-port 8899
   --full-rpc-api
-  --rpc-threads 4
+  --rpc-send-leader-count 3 # (default is 2)
   --skip-poh-verify
   --no-poh-speed-test
   --wal-recovery-mode skip_any_corrupted_record
