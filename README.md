@@ -174,34 +174,6 @@ If you wish to activate the dev keypair,
 sosh-set-config dev
 ```
 
-#### Maybe Setup tmpfs
-**WARNING: The information in this section was formulated in Fall 2022, and may no longer be suitable for the currently-recommended validator software release and mainnet state. Caveat emptor.**
-
-Depending on RAM size add an entry like this to `/etc/fstab`:
-
-128GB RAM machine:
-```
-tmpfs /mnt/tmpfs tmpfs rw,size=32G,user=ops,noatime 0 0
-```
-256GB RAM machine:
-```
-tmpfs /mnt/tmpfs tmpfs rw,size=160G,user=ops,noatime 0 0
-```
-512GB RAM machine:
-```
-tmpfs /mnt/tmpfs tmpfs rw,size=256G,user=ops,noatime 0 0
-```
-then
-```
-sudo mkdir /mnt/tmpfs
-sudo mount /mnt/tmpfs
-```
-
-#### Recommended tmpfs configuration
-* 128GB RAM: incremental snapshots
-* 256GB RAM: incremental snapshots, accounts
-* 512GB RAM: : incremental snapshots, full snapshots, accounts
-
 #### Maybe Adjust FileSystem Usage
 
 ##### rocksdb filesystem
@@ -222,14 +194,9 @@ locations will be added as an `--account` arg to validator startup.
 If none are present, accounts will be placed in the default location of
 `~/ledger/accounts`
 
-Example of putting all accounts in tmpfs:
+Example of accounts evenly disributed across two drives:
 ```
-sudo ln -s /mnt/tmpfs /mnt/account1
-```
-
-Example of putting 50% of accounts in tmpfs, 50% on a separate drive:
-```
-sudo ln -s /mnt/tmpfs /mnt/account1
+sudo ln -s /mnt/nvme1 /mnt/account1
 sudo ln -s /mnt/nvme2 /mnt/account2
 ```
 
@@ -237,20 +204,16 @@ sudo ln -s /mnt/nvme2 /mnt/account2
 
 If not present, snapshots will be placed in the default location of `~/ledger`
 
-Example of putting all snapshots in tmpfs:
+Example of putting all snapshots in a seperate drive:
 ```
-sudo ln -s /mnt/tmpfs /mnt/snapshots
+sudo ln -s /mnt/nvme3 /mnt/snapshots
 ```
 
-Example of putting incremental snapshots in tmpfs, full snapshots in default
+Example of putting incremental snapshots in a separate drive, full snapshots in default
 location:
 ```
-sudo ln -s /mnt/tmpfs /mnt/incremental-snapshots
+sudo ln -s /mnt/nvme4 /mnt/incremental-snapshots
 ```
-
-Note that when snapshots are placed in tmpfs you will need to manually recover
-the validator if the system ever reboots by running `fetch-snapshot.sh` with
-usable args.
 
 ### Start the node manually to initialize the ledger
 ```
