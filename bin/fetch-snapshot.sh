@@ -8,19 +8,25 @@ fi
 
 case $1 in
 bv1)
-  host=145.40.67.83
+  host=147.28.180.247
   ;;
 bv2)
-  host=147.75.38.117
+  host=145.40.64.255
   ;;
 bv3)
-  host=145.40.93.177
+  host=147.28.134.81
   ;;
 bv4)
-  host=86.109.15.59
+  host=147.28.198.87
+  ;;
+bw1)
+  host=147.28.186.63
   ;;
 bw2)
-  host=145.40.93.71
+  host=86.109.5.247
+  ;;
+bw3)
+  host=145.40.126.129
   ;;
 mapi)
   host=api.mainnet-beta.solana.com
