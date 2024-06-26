@@ -83,7 +83,7 @@ mainnet)
   TIP_PAYMENT_PROGRAM_PUBKEY=T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt
   TIP_DISTRIBUTION_PROGRAM_PUBKEY=4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7
   MERKLE_ROOT_UPLOAD_AUTHORITY=GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
-  : ${COMMISSION_BPS:=10000}
+  : ${COMMISSION_BPS:=1000}
 
   # `~/sosh-config.sh` may override the default Jito config if desired
   #
@@ -127,7 +127,7 @@ testnet)
   TIP_DISTRIBUTION_PROGRAM_PUBKEY=FhKaSCWdhK86Mbccwtz7xvfqQpjbrmWgsHExrXbmAzVW
   MERKLE_ROOT_UPLOAD_AUTHORITY=GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib
 
-  : ${COMMISSION_BPS:=800}
+  : ${COMMISSION_BPS:=1000}
   # `~/sosh-config.sh` may override the default Jito config if desired
   # See https://jito-labs.gitbook.io/mev/systems/connecting/testnet
   if [[ -z $BLOCK_ENGINE_URL ]]; then
