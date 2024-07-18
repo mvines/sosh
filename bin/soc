@@ -9,6 +9,7 @@ args=()
 if [[ -n $SOSH_RPC_URL ]]; then
   args+=(--url "$SOSH_RPC_URL")
 fi
+args+=(--commitment finalized)
 args+=(catchup ~/active-key/validator-identity.json http://127.0.0.1:8899)
 
 set -x
