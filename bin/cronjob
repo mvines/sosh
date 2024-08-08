@@ -3,7 +3,8 @@
 # Add following to crontab
 # SHELL=/bin/bash
 # @hourly /home/sol/sosh/bin/cronjob --hourly &>> /home/sol/hourly_cron.log
-# @daily /home/sol/sosh/bin/cronjob --daily &>> /home/sol/daily_cron.log
+# 0    */12   *    *    *  /home/sol/sosh/bin/cronjob --daily
+# */15 *      *    *    * /home/sol/sosh/bin/cronjob --ping
 
 set -e
 
@@ -34,7 +35,7 @@ lamports_to_sol() {
 }
 
 is_reachable() {
-  ping $1 -q -c 1 -W 1 || curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Trouble in reaching $1\"}" $SOSH_SLACK_WEBHOOK
+  ping $1 -q -c 1 -W 1 || curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$1 in unreachable\"}" $SOSH_SLACK_WEBHOOK
 }
 
 declare -i last_epoch=0
@@ -43,6 +44,9 @@ if [ -f ~sol/balance.csv ]; then
 fi
 
 epoch="$(solana epoch)"
+vote_pubkey="$(solana-keygen pubkey ~sol/keys/primary/validator-vote-account.json)"
+export LATITUDE_API_KEY
+export SLACK_WEBHOOK=$SOSH_SLACK_WEBHOOK
 
 case "$opt" in
   "--hourly" )
@@ -55,6 +59,11 @@ case "$opt" in
       echo $msg
       if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
         curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
+        ~sol/solana-credit-score/target/release/solana-credit-score --identity $vote_pubkey --reason new_epoch
+      fi
+    else
+      if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
+        ~sol/solana-credit-score/target/release/solana-credit-score --identity $vote_pubkey --reason hourly
       fi
     fi
     ;;
@@ -66,6 +75,7 @@ case "$opt" in
     echo $msg
     if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
       curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
+      ~sol/solana-credit-score/target/release/solana-credit-score --identity $vote_pubkey --reason daily
     fi
     ;;
   "--ping" )
