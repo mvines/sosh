@@ -47,7 +47,7 @@ case "$opt" in
       total_lamport=$(total_lamports)
       echo "$epoch, $last_epoch, $total_lamport" >> ~sol/balance.csv
       total_sol=$(lamports_to_sol $total_lamport)
-      msg="New Epoch: $epoch (previous: $last_epoch), Balance: $total_sol"
+      msg="New Epoch: $epoch (previous: $last_epoch), Balance: $total_sol sol, $total_lamport lamports"
       echo $msg
       if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
         curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
@@ -58,7 +58,7 @@ case "$opt" in
     echo "Running daily variant"
     total_lamport=$(total_lamports)
     total_sol=$(lamports_to_sol $total_lamport)
-    msg="Epoch: $epoch (previous: $last_epoch), Balance: $total_sol"
+    msg="Epoch: $epoch (previous: $last_epoch), Balance: $total_sol sol, $total_lamport lamports"
     echo $msg
     if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
       curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
@@ -68,7 +68,7 @@ case "$opt" in
     echo "Running unknown variant"
     total_lamport=$(total_lamports)
     total_sol=$(lamports_to_sol $total_lamport)
-    msg="Epoch: $epoch (previous: $last_epoch), Balance: $total_sol"
+    msg="Epoch: $epoch (previous: $last_epoch), Balance: $total_sol sol, $total_lamport lamports"
     echo $msg
     ;;
 esac
