@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+# Add following to crontab
+# SHELL=/bin/bash
+# @hourly /home/sol/sosh/bin/cronjob --hourly &>> /home/sol/hourly_cron.log
+# @daily /home/sol/sosh/bin/cronjob --daily &>> /home/sol/daily_cron.log
+
+set -e
+
+here="$(dirname "$0")"
+
+#shellcheck source=/dev/null
+source "$here"/../service-env.sh
+
+if [[ $SOSH_CONFIG = primary ]]; then
+  echo "Do not run $0 on a primary node"
+  exit 0
+fi
+
+opt=$1
+
+total_lamports() {
+  declare -i validator_lamports="$(solana balance ~sol/keys/primary/validator-identity.json --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
+  declare -i vote_lamports="$(solana balance ~sol/keys/primary/validator-vote-account.json --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
+  declare -i signer_lamports="$(solana balance $(<~sol/keys/primary/validator-vote-auth-pubkey) --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
+
+  declare -i lamport=validator_lamports+vote_lamports+signer_lamports
+  echo "$lamport"
+}
+
+lamports_to_sol() {
+  sol=$(echo "scale=3; $1 / 1000000000" | bc -l)
+  echo "$sol"
+}
+
+declare -i last_epoch=0
+if [ -f ~sol/balance.csv ]; then
+  last_epoch=$(tail -n 1 ~sol/balance.csv | cut -f 1 -d ',')
+fi
+
+epoch="$(solana epoch)"
+
+case "$opt" in
+  "--hourly" )
+    echo "Running hourly variant"
+    if (( epoch > last_epoch )); then
+      total_lamport=$(total_lamports)
+      echo "$epoch, $last_epoch, $total_lamport" >> ~sol/balance.csv
+      total_sol=$(lamports_to_sol $total_lamport)
+      msg="New Epoch: $epoch (previous: $last_epoch), Balance: $total_sol"
+      echo $msg
+      if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
+        curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
+      fi
+    fi
+    ;;
+  "--daily" )
+    echo "Running daily variant"
+    total_lamport=$(total_lamports)
+    total_sol=$(lamports_to_sol $total_lamport)
+    msg="Epoch: $epoch (previous: $last_epoch), Balance: $total_sol"
+    echo $msg
+    if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
+      curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
+    fi
+    ;;
+  *)
+    echo "Running unknown variant"
+    total_lamport=$(total_lamports)
+    total_sol=$(lamports_to_sol $total_lamport)
+    msg="Epoch: $epoch (previous: $last_epoch), Balance: $total_sol"
+    echo $msg
+    ;;
+esac
+
+
