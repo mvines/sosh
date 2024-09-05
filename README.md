@@ -11,7 +11,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ### Solana Cli
 ```
-sh -c "$(curl -sSfL https://release.solana.com/beta/install)"
+sh -c "$(curl -sSfL https://release.anza.xyz/beta/install)"
 ```
 
 then restart shell to apply new PATH
