@@ -20,10 +20,16 @@ if [ $SOSH_CONFIG == "primary" ] && [ "$opt" != "--ping" ]; then
   exit 0
 fi
 
+solana_args=()
+if [[ -n $SOSH_RPC_URL ]]; then
+  solana_args+=(--url "$SOSH_RPC_URL")
+fi
+
+
 total_lamports() {
-  declare -i validator_lamports="$(solana balance ~sol/keys/primary/validator-identity.json --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
-  declare -i vote_lamports="$(solana balance ~sol/keys/primary/validator-vote-account.json --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
-  declare -i signer_lamports="$(solana balance $(<~sol/keys/primary/validator-vote-auth-pubkey) --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
+  declare -i validator_lamports="$(solana ${solana_args[@]} balance ~/keys/primary/validator-identity.json --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
+  declare -i vote_lamports="$(solana ${solana_args[@]} balance ~/keys/primary/validator-vote-account.json --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
+  declare -i signer_lamports="$(solana ${solana_args[@]} balance $(<~/keys/primary/validator-vote-auth-pubkey) --output json-compact | python3 -c "import sys, json; print(json.load(sys.stdin)['lamports'])")"
 
   declare -i lamport=validator_lamports+vote_lamports+signer_lamports
   echo "$lamport"
@@ -39,12 +45,12 @@ is_reachable() {
 }
 
 declare -i last_epoch=0
-if [ -f ~sol/balance.csv ]; then
-  last_epoch=$(tail -n 1 ~sol/balance.csv | cut -f 1 -d ',')
+if [ -f ~/balance.csv ]; then
+  last_epoch=$(tail -n 1 ~/balance.csv | cut -f 1 -d ',')
 fi
 
-epoch="$(solana epoch)"
-vote_pubkey="$(solana-keygen pubkey ~sol/keys/primary/validator-vote-account.json)"
+epoch="$(solana ${solana_args[@]} epoch)"
+vote_pubkey="$(solana-keygen pubkey ~/keys/primary/validator-vote-account.json)"
 export LATITUDE_API_KEY
 export SLACK_WEBHOOK=$SOSH_SLACK_WEBHOOK
 
@@ -53,17 +59,17 @@ case "$opt" in
     echo "Running hourly variant"
     if (( epoch > last_epoch )); then
       total_lamport=$(total_lamports)
-      echo "$epoch, $last_epoch, $total_lamport" >> ~sol/balance.csv
+      echo "$epoch, $last_epoch, $total_lamport" >> ~/balance.csv
       total_sol=$(lamports_to_sol $total_lamport)
       msg="New Epoch: $epoch (previous: $last_epoch), Balance: $total_sol sol, $total_lamport lamports"
       echo $msg
       if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
         curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
-        ~sol/solana-credit-score/target/release/solana-credit-score --identity $vote_pubkey --reason new_epoch
+        solana-credit-score ${solana_args[@]} --identity $vote_pubkey --reason new_epoch
       fi
     else
       if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
-        ~sol/solana-credit-score/target/release/solana-credit-score --identity $vote_pubkey --reason hourly
+        solana-credit-score ${solana_args[@]} --identity $vote_pubkey --reason hourly
       fi
     fi
     ;;
@@ -75,7 +81,7 @@ case "$opt" in
     echo $msg
     if [[ -n $SOSH_SLACK_WEBHOOK ]]; then
       curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$msg\"}" $SOSH_SLACK_WEBHOOK
-      ~sol/solana-credit-score/target/release/solana-credit-score --identity $vote_pubkey --reason daily
+      solana-credit-score ${solana_args[@]} --identity $vote_pubkey --reason daily
     fi
     ;;
   "--ping" )
