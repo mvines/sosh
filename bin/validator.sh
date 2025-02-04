@@ -56,7 +56,6 @@ args=(
   --skip-poh-verify
   --no-poh-speed-test
   --wal-recovery-mode skip_any_corrupted_record
-  --rocksdb-shred-compaction fifo
   --accounts-db-skip-shrink
   --full-snapshot-interval-slots 12000
   --maximum-full-snapshots-to-retain 1
